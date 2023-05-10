@@ -6,6 +6,16 @@ const pizzaController = {
     // get all pizzas
     getAllPizzas(req, res) {
         Pizza.find({})
+            // include comments data in pizza data json
+            .populate({
+                path: 'comments',
+                // do not retun comment's __v field (if this was included, it would return ONlY the __v field)
+                select: '-__v'
+            })
+            // do not return pizza's __v field
+            .select('-__v')
+            // sort in decending order by _id value
+            .sort({ _id: -1 })
             .then(dbPizzaData => res.json(dbPizzaData))
             .catch(err => {
                 console.log(err);
@@ -16,6 +26,12 @@ const pizzaController = {
     // get one pizza by id
     getPizzaById({ params }, res) {
         Pizza.findOne({ _id: params.id })
+            // return comment data with pizza data
+            .populate({
+                path: 'comments',
+                select: '-__v'
+            })
+            .select('-__v')
             .then(dbPizzaData => {
                 // if no pizza found, 404
                 if (!dbPizzaData) {
