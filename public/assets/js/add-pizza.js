@@ -68,6 +68,8 @@ const handlePizzaSubmit = event => {
     })
     .catch(err => {
       console.log(err);
+      // if network failure, catch will trigger. Save data to indexedDb
+      saveRecord(formData);
     });
 };
 
