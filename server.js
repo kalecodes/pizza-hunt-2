@@ -13,7 +13,7 @@ app.use(require('./routes'));
 // connnect to mongoose on start
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/pizza-hunt-2', {
     useNewUrlParser: true,
-    useUnifiedToplogy: true
+    useUnifiedTopology: true
 });
 
 // log mongo queries being executed
